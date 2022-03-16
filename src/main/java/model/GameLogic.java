@@ -62,8 +62,9 @@ public class GameLogic {
             if (check(i,j,_matrix)){
                 for (int k = 0; k < _matrix[0].length; k++) {
                     for (int l = 0; l < _matrix.length; l++) {
-                        if ( __gameField[l+i][k+j] != 1)
-                            __gameField[l+i][k+j] = _matrix[l][k];
+                        assert  ( __gameField[l+i][k+j] == 0);
+                        ////
+                        __gameField[l+i][k+j] = _matrix[l][k];
                     }
                 }
                 nextStep();
