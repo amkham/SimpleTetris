@@ -48,6 +48,14 @@ public class GameLogic {
         return __timer.getTime();
     }
 
+    protected void setCount(int count) {
+        __count = count;
+    }
+
+    protected void setFigure(Figure figure) {
+        __figure = figure;
+    }
+
     public void insert(int i, int j) {
         try {
             int[][] _matrix = __figure.getMatrix();
