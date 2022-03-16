@@ -251,10 +251,11 @@ public enum Figure {
         }
     };
 
-    public abstract int[][] getMatrix();
 
     public static Figure getFigure(int index) {
         Figure[] _figures = Figure.values();
         return _figures[index];
     }
+
+    public abstract int[][] getMatrix();
 }

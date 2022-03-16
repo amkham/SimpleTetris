@@ -1,12 +1,10 @@
-import controller.GameController;
-import model.GameLogic;
-import view.GameMainForm;
+import presenter.MainViewPresenter;
+import model.LogicManager;
+import view.Game;
 
 public class Main {
 
     public static void main(String[] args) {
-        GameLogic _gameLogic = new GameLogic();
-        GameController _gameController = new GameController(_gameLogic);
-        new GameMainForm(_gameController, _gameLogic);
+        new MainViewPresenter(new Game(), new LogicManager()).startGame();
     }
 }
