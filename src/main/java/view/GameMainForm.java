@@ -1,32 +1,59 @@
+package view;
+
+import controller.GameController;
+import model.Figure;
+import model.GameLogic;
+import model.GameResult;
+
 import javax.swing.*;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.Random;
 
 public class GameMainForm extends JFrame {
-    private final int __mainPanelWidth = 1000;
-    private final int __mainPanelHeight = 700;
+    private final int __mainPanelWidth = 700;
+    private final int __mainPanelHeight = 600;
 
     private final Point __figurePanelLocation = new Point(500,10);
-
+    private final Point __gameEndBtnLocation = new Point(500, 200 );
+    private final GameController __gameController;
+    private final GameLogic __gameLogic;
     private JPanel __mainPanel;
     private JPanel __figurePanel, __gameFieldPanel;
 
-    private GameLogic __gameLogic;
+    public GameMainForm(GameController gameController, GameLogic gameLogic) {
 
-    public GameMainForm() {
+        __gameController = gameController;
+        __gameLogic = gameLogic;
+
         setSize(__mainPanelWidth, __mainPanelHeight);
         setResizable(false);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initMainPanel();
+        initEndGameBtn();
         setContentPane(__mainPanel);
 
-        __gameLogic = new GameLogic(this);
-        setVisible(true);
+       __gameLogic.setListener(new GameLogic.ChangeListener() {
 
+           @Override
+           public void end(GameResult result) {
+               setVisible(false);
+               new GameResultForm(result.time(), result.count());
+           }
+
+           @Override
+           public void figureChanged(Figure figure) {
+               SwingUtilities.invokeLater(() -> updateFigure(figure));
+           }
+
+           @Override
+           public void gameFieldChanged(int[][] field) {
+
+               SwingUtilities.invokeLater(()-> updateGameField(field));
+           }
+       });
 
         __mainPanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -38,18 +65,24 @@ public class GameMainForm extends JFrame {
                 );
             }
         });
-
-
         __mainPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                __mainPanel.removeAll();
-                __gameLogic.insert(e.getX(), e.getY());
+                __mainPanel.remove(__gameFieldPanel);
+                __mainPanel.remove(__figurePanel);
+                int x = e.getX()/50 - 1;
+                int y = e.getY()/50 - 1;
+                __gameController.insertFigure(x,y);
             }
         });
+
+        __gameController.startGame();
+        setVisible(true);
     }
+
+
     
-    public void updateGameField(int[][] matrix){
+    private void updateGameField(int[][] matrix){
         if (__gameFieldPanel != null){
             __gameFieldPanel.removeAll();
         }
@@ -58,7 +91,7 @@ public class GameMainForm extends JFrame {
 
     }
 
-    public void updateFigure(Figure figure) {
+    private void updateFigure(Figure figure) {
         if (__figurePanel != null){
             __figurePanel.removeAll();
         }
@@ -68,9 +101,6 @@ public class GameMainForm extends JFrame {
     }
 
     private void fillPanel(JPanel jPanel, int[][] matrix){
-
-
-
         int _width =  matrix.length;
         int _height = matrix[0].length;
 
@@ -98,6 +128,17 @@ public class GameMainForm extends JFrame {
         __gameFieldPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         __gameFieldPanel.setLocation(10, 10);
         __mainPanel.add(__gameFieldPanel);
+    }
+
+    private void initEndGameBtn() {
+        JButton _jButton = new JButton();
+        _jButton.addActionListener(e -> {
+            __gameLogic.end();
+        });
+        _jButton.setSize(150,20);
+        _jButton.setText("Завершить игру");
+        _jButton.setLocation(__gameEndBtnLocation);
+        __mainPanel.add(_jButton);
     }
 
     public void initFigureGenerateField(int w, int h) {

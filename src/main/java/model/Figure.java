@@ -1,4 +1,4 @@
-import java.util.Random;
+package model;
 
 public enum Figure {
     FIGURE1 {
