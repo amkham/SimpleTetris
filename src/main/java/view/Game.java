@@ -1,40 +1,51 @@
 package view;
 
 import model.Figure;
-import presenter.IMainViewPresenter;
+import model.GameTime;
+import service.GameService;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Game extends JFrame implements IViewContract {
+public class Game extends JFrame {
 
-    private final Point figureLocation = new Point(500, 10);
-    private final Point gameButtonLocation = new Point(500, 250);
-    private final Point gameStepsTextFieldLocation = new Point(500, 200);
-    private final Point gameTimeTextFieldLocation = new Point(500, 220);
 
-    private final Color rectangleColor = Color.ORANGE;
+    private Point figureLocation ;
+    private Point gameButtonLocation;
+    private Point gameStepsTextFieldLocation;
+    private Point gameTimeTextFieldLocation;
+
+
 
     private final int size = 50;
 
-    private IMainViewPresenter mainViewPresenter;
+    private GameService mainViewPresenter;
     private final Timer timer;
     private JPanel mainPanel;
-    private JPanel figurePanel, gameFieldPanel;
-    private JLabel step, time;
+    private JPanel figureGenerateContainer, gameFieldContainer;
+    private JLabel stepLabel, timeLabel;
 
-    private int gameTime;
+    private final Color rectangleColor = Color.GREEN;
+
+    private final GameTime gameTime = new GameTime();
 
     public Game() {
 
-        int _mainPanelWidth = 700;
-        int _mainPanelHeight = 520;
+        int _mainPanelWidth = 701;
+        int _mainPanelHeight = 521;
+
         setSize(_mainPanelWidth, _mainPanelHeight);
+
+        setTitle("Простой тетрис");
+
         setResizable(false);
+
         setLocationRelativeTo(null);
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setSize();
         createMainPanel();
         createButton();
         createGameStepLabel();
@@ -42,47 +53,53 @@ public class Game extends JFrame implements IViewContract {
         setContentPane(mainPanel);
 
         timer = new Timer(1000, e -> {
-            gameTime++;
-            SwingUtilities.invokeLater(() -> time.setText("Время: " + gameTime));
+            gameTime.tick();
+            SwingUtilities.invokeLater(() -> timeLabel.setText(gameTime.getTime()));
         });
         timer.start();
 
         setVisible(true);
     }
 
-    @Override
+    private void setSize(){
+        figureLocation = new Point(500, 10);
+        gameButtonLocation = new Point(500, 250);
+        gameStepsTextFieldLocation = new Point(500, 200);
+        gameTimeTextFieldLocation = new Point(500, 220);
+    }
+
+
     public void updateGameField(int[][] matrix) {
-        if (gameFieldPanel != null) {
-            gameFieldPanel.removeAll();
+        if (gameFieldContainer != null) {
+            gameFieldContainer.removeAll();
         }
         createGameField(9, 9);
-        fillGameField(gameFieldPanel, matrix, true);
+        fillGameField(gameFieldContainer, matrix, true);
     }
 
-    @Override
+
     public void updateGameStep(int step) {
-        SwingUtilities.invokeLater(() -> this.step.setText("Сделано ходов: " + step));
+        SwingUtilities.invokeLater(() -> this.stepLabel.setText("Ходов: " + step));
     }
 
-    @Override
     public void end(int steps) {
         timer.stop();
-        new Statistic(gameTime, steps);
+        new GameStatistic(gameTime.getTime(), steps);
         setVisible(false);
     }
 
-    @Override
-    public void setPresenter(IMainViewPresenter presenter) {
-        mainViewPresenter = presenter;
+
+    public void setGameService(GameService service) {
+        mainViewPresenter = service;
     }
 
-    @Override
+
     public void updateFigure(Figure figure) {
-        if (figurePanel != null) {
-            figurePanel.removeAll();
+        if (figureGenerateContainer != null) {
+            figureGenerateContainer.removeAll();
         }
         createFigureContainer(figure.getMatrix().length, figure.getMatrix()[0].length);
-        fillGameField(figurePanel, figure.getMatrix(), false);
+        fillGameField(figureGenerateContainer, figure.getMatrix(), false);
 
     }
 
@@ -106,72 +123,74 @@ public class Game extends JFrame implements IViewContract {
 
     private void createMainPanel() {
         mainPanel.setLayout(null);
+        mainPanel.setBackground(Color.DARK_GRAY);
         mainPanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                figurePanel.setLocation(
-                        (e.getX() / size) * size + gameFieldPanel.getLocation().x - size,
-                        (e.getY() / size) * size + gameFieldPanel.getLocation().y - size
+                figureGenerateContainer.setLocation(
+                        (e.getX() / size) * size + gameFieldContainer.getLocation().x - size,
+                        (e.getY() / size) * size + gameFieldContainer.getLocation().y - size
                 );
             }
         });
         mainPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                mainPanel.remove(gameFieldPanel);
-                mainPanel.remove(figurePanel);
+                mainPanel.remove(gameFieldContainer);
+                mainPanel.remove(figureGenerateContainer);
                 int x = e.getX() / size - 1;
                 int y = e.getY() / size - 1;
-                mainViewPresenter.setFigure(x,y);
+                mainViewPresenter.insertFigure(x,y);
             }
         });
     }
 
     public void createGameField(int w, int h) {
-        gameFieldPanel = new JPanel();
-        gameFieldPanel.setLayout(new GridLayout(w, h));
-        gameFieldPanel.setSize(w * size, h * size);
-        gameFieldPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        gameFieldPanel.setLocation(10, 10);
-        mainPanel.add(gameFieldPanel);
+        gameFieldContainer = new JPanel();
+        gameFieldContainer.setLayout(new GridLayout(w, h));
+        gameFieldContainer.setSize(w * size, h * size);
+        gameFieldContainer.setBorder(BorderFactory.createLineBorder(Color.black));
+        gameFieldContainer.setLocation(10, 10);
+        mainPanel.add(gameFieldContainer);
     }
 
     private void createGameStepLabel() {
-        step = new JLabel();
-        step.setSize(200, 20);
-        step.setBorder(new EmptyBorder(10, 10, 10, 10));
-        step.setText("Колличество ходов: ");
-        step.setLocation(gameStepsTextFieldLocation);
-        mainPanel.add(step);
+        stepLabel = new JLabel();
+        stepLabel.setSize(200, 20);
+        stepLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        stepLabel.setForeground(Color.white);
+        stepLabel.setText("Ходов: ");
+        stepLabel.setLocation(gameStepsTextFieldLocation);
+        mainPanel.add(stepLabel);
     }
 
     private void createTimeLabel() {
-        time = new JLabel();
-        time.setSize(100, 20);
-        time.setBorder(new EmptyBorder(10, 10, 10, 10));
-        time.setLocation(gameTimeTextFieldLocation);
-        time.setText("Время: ");
-        mainPanel.add(time);
+        timeLabel = new JLabel();
+        timeLabel.setSize(150, 20);
+        timeLabel.setForeground(Color.white);
+        timeLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        timeLabel.setLocation(gameTimeTextFieldLocation);
+        mainPanel.add(timeLabel);
     }
 
     private void createButton() {
         JButton _jButton = new JButton();
         _jButton.addActionListener(e -> {
-            mainViewPresenter.endGame();
+            mainViewPresenter.end();
         });
         _jButton.setSize(150, 20);
-        _jButton.setText("Завершить игру");
+        _jButton.setText("Завершить");
         _jButton.setLocation(gameButtonLocation);
         mainPanel.add(_jButton);
     }
 
     public void createFigureContainer(int w, int h) {
-        figurePanel = new JPanel();
-        figurePanel.setLayout(new GridLayout(h, w));
-        figurePanel.setBackground(new Color(0, 0, 0, 0));
-        figurePanel.setSize(w * size, h * size);
-        figurePanel.setLocation(figureLocation);
-        mainPanel.add(figurePanel);
+        figureGenerateContainer = new JPanel();
+        figureGenerateContainer.setLayout(new GridLayout(h, w));
+        figureGenerateContainer.setBackground(new Color(0, 0, 0, 0));
+        figureGenerateContainer.setSize(w * size, h * size);
+        figureGenerateContainer.setLocation(figureLocation);
+        mainPanel.add(figureGenerateContainer);
     }
 
     private Component createRectangle() {
