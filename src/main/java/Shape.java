@@ -1,8 +1,11 @@
-package model;
+/**
+ * Перечисление фигур игры
+ */
+public enum Shape {
 
-public enum Figure {
-    FIGURE1 {
-        public int[][] getMatrix() {
+
+    SHAPE1 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1},
                     {1, 0},
@@ -11,8 +14,8 @@ public enum Figure {
         }
     },
 
-    FIGURE2 {
-        public int[][] getMatrix() {
+    SHAPE2 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 0, 0},
                     {1, 1, 1}
@@ -20,8 +23,8 @@ public enum Figure {
         }
     },
 
-    FIGURE3 {
-        public int[][] getMatrix() {
+    SHAPE3 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {0, 1},
                     {0, 1},
@@ -30,8 +33,8 @@ public enum Figure {
         }
     },
 
-    FIGURE4 {
-        public int[][] getMatrix() {
+    SHAPE4 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1, 1},
                     {0, 0, 1}
@@ -39,8 +42,8 @@ public enum Figure {
         }
     },
 
-    FIGURE5 {
-        public int[][] getMatrix() {
+    SHAPE5 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1},
                     {0, 1},
@@ -49,16 +52,16 @@ public enum Figure {
         }
     },
 
-    FIGURE6 {
-        public int[][] getMatrix() {
+    SHAPE6 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {0, 0, 1},
                     {1, 1, 1}
             };
         }
     },
-    FIGURE7 {
-        public int[][] getMatrix() {
+    SHAPE7 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 0},
                     {1, 0},
@@ -67,8 +70,8 @@ public enum Figure {
         }
     },
 
-    FIGURE8 {
-        public int[][] getMatrix() {
+    SHAPE8 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1, 1},
                     {1, 0, 0}
@@ -76,8 +79,8 @@ public enum Figure {
         }
     },
 
-    FIGURE9 {
-        public int[][] getMatrix() {
+    SHAPE9 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 0},
                     {1, 1},
@@ -86,8 +89,8 @@ public enum Figure {
         }
     },
 
-    FIGURE10 {
-        public int[][] getMatrix() {
+    SHAPE10 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {0, 1, 1},
                     {1, 1, 0}
@@ -95,8 +98,8 @@ public enum Figure {
         }
     },
 
-    FIGURE11 {
-        public int[][] getMatrix() {
+    SHAPE11 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {0, 1},
                     {1, 1},
@@ -105,8 +108,8 @@ public enum Figure {
         }
     },
 
-    FIGURE12 {
-        public int[][] getMatrix() {
+    SHAPE12 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1, 0},
                     {0, 1, 1}
@@ -114,8 +117,8 @@ public enum Figure {
         }
     },
 
-    FIGURE13 {
-        public int[][] getMatrix() {
+    SHAPE13 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {0, 1, 0},
                     {0, 1, 0},
@@ -124,8 +127,8 @@ public enum Figure {
         }
     },
 
-    FIGURE14 {
-        public int[][] getMatrix() {
+    SHAPE14 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1, 1},
                     {0, 1, 0},
@@ -134,8 +137,8 @@ public enum Figure {
         }
     },
 
-    FIGURE15 {
-        public int[][] getMatrix() {
+    SHAPE15 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 0, 0},
                     {1, 1, 1},
@@ -144,8 +147,8 @@ public enum Figure {
         }
     },
 
-    FIGURE16 {
-        public int[][] getMatrix() {
+    SHAPE16 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {0, 0, 1},
                     {1, 1, 1},
@@ -153,16 +156,16 @@ public enum Figure {
             };
         }
     },
-    FIGURE17 {
-        public int[][] getMatrix() {
+    SHAPE17 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1, 1}
             };
         }
     },
 
-    FIGURE18 {
-        public int[][] getMatrix() {
+    SHAPE18 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1},
                     {1},
@@ -171,16 +174,16 @@ public enum Figure {
         }
     },
 
-    FIGURE19 {
-        public int[][] getMatrix() {
+    SHAPE19 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1}
             };
         }
     },
 
-    FIGURE20 {
-        public int[][] getMatrix() {
+    SHAPE20 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1},
                     {1, 0}
@@ -188,8 +191,8 @@ public enum Figure {
         }
     },
 
-    FIGURE21 {
-        public int[][] getMatrix() {
+    SHAPE21 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1},
                     {0, 1}
@@ -197,8 +200,8 @@ public enum Figure {
         }
     },
 
-    FIGURE22 {
-        public int[][] getMatrix() {
+    SHAPE22 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {0, 1},
                     {1, 1}
@@ -206,8 +209,8 @@ public enum Figure {
         }
     },
 
-    FIGURE23 {
-        public int[][] getMatrix() {
+    SHAPE23 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 0},
                     {1, 1}
@@ -215,8 +218,8 @@ public enum Figure {
         }
     },
 
-    FIGURE24 {
-        public int[][] getMatrix() {
+    SHAPE24 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 0},
                     {1, 1},
@@ -224,8 +227,8 @@ public enum Figure {
             };
         }
     },
-    FIGURE25 {
-        public int[][] getMatrix() {
+    SHAPE25 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1, 1},
                     {0, 1, 0}
@@ -233,8 +236,8 @@ public enum Figure {
         }
     },
 
-    FIGURE26 {
-        public int[][] getMatrix() {
+    SHAPE26 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {0, 1},
                     {1, 1},
@@ -242,8 +245,8 @@ public enum Figure {
             };
         }
     },
-    FIGURE27 {
-        public int[][] getMatrix() {
+    SHAPE27 {
+        public int[][] getShapeStructure() {
             return new int[][]{
                     {0, 1, 0},
                     {1, 1, 1}
@@ -252,10 +255,10 @@ public enum Figure {
     };
 
 
-    public static Figure getFigure(int index) {
-        Figure[] _figures = Figure.values();
-        return _figures[index];
+    public static Shape getFigure(int index) {
+        Shape[] shapes = Shape.values();
+        return shapes[index];
     }
 
-    public abstract int[][] getMatrix();
+    public abstract int[][] getShapeStructure();
 }

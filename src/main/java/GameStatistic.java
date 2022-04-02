@@ -1,7 +1,3 @@
-package view;
-
-import service.GameService;
-import model.GameLogic;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,7 +16,7 @@ public class GameStatistic extends JFrame{
         setContentPane(mainPanel);
         setSize(300,200);
 
-        setTitle("Конец игры");
+        setTitle("Результат");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
