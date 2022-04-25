@@ -80,13 +80,17 @@ public class GameLogic {
     @Contract(pure = true)
     private boolean checkStepValid(int i, int j, int[] @NotNull [] matrix)
     {
-        for (int k = 0; k < matrix[0].length; k++)
-        {
-            for (int l = 0; l < matrix.length; l++)
-            {
+        int k = 0;
+        int l = 0;
+        while (k < matrix[0].length){
+            while (l < matrix.length){
                 if (game[l+i][k+j] == 1 && matrix[l][k] == 1) return false;
+                l++;
             }
+
+            k++;
         }
+
         return true;
     }
 

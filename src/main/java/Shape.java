@@ -2,23 +2,22 @@
  * Перечисление фигур игры
  */
 public enum Shape {
-
-
     SHAPE1 {
         public int[][] getShapeStructure() {
             return new int[][]{
-                    {1, 1},
-                    {1, 0},
-                    {1, 0}
+                    {1, 0, 0},
+                    {1, 1, 1}
             };
         }
     },
 
     SHAPE2 {
         public int[][] getShapeStructure() {
+
             return new int[][]{
-                    {1, 0, 0},
-                    {1, 1, 1}
+                    {1, 1},
+                    {1, 0},
+                    {1, 0}
             };
         }
     },
@@ -37,10 +36,11 @@ public enum Shape {
         public int[][] getShapeStructure() {
             return new int[][]{
                     {1, 1, 1},
-                    {0, 0, 1}
+                    {1, 0, 0}
             };
         }
     },
+
 
     SHAPE5 {
         public int[][] getShapeStructure() {
@@ -69,16 +69,16 @@ public enum Shape {
             };
         }
     },
-
     SHAPE8 {
         public int[][] getShapeStructure() {
             return new int[][]{
-                    {1, 1, 1},
-                    {1, 0, 0}
+                    {0, 1, 0},
+                    {0, 1, 0},
+                    {1, 1, 1}
             };
+
         }
     },
-
     SHAPE9 {
         public int[][] getShapeStructure() {
             return new int[][]{
@@ -88,7 +88,6 @@ public enum Shape {
             };
         }
     },
-
     SHAPE10 {
         public int[][] getShapeStructure() {
             return new int[][]{
@@ -97,7 +96,6 @@ public enum Shape {
             };
         }
     },
-
     SHAPE11 {
         public int[][] getShapeStructure() {
             return new int[][]{
@@ -119,10 +117,10 @@ public enum Shape {
 
     SHAPE13 {
         public int[][] getShapeStructure() {
+
             return new int[][]{
-                    {0, 1, 0},
-                    {0, 1, 0},
-                    {1, 1, 1}
+                    {1, 1, 1},
+                    {0, 0, 1}
             };
         }
     },
@@ -140,10 +138,10 @@ public enum Shape {
     SHAPE15 {
         public int[][] getShapeStructure() {
             return new int[][]{
-                    {1, 0, 0},
-                    {1, 1, 1},
-                    {1, 0, 0}
+                    {1, 1},
+                    {1, 0}
             };
+
         }
     },
 
@@ -184,9 +182,11 @@ public enum Shape {
 
     SHAPE20 {
         public int[][] getShapeStructure() {
+
             return new int[][]{
-                    {1, 1},
-                    {1, 0}
+                    {1, 0, 0},
+                    {1, 1, 1},
+                    {1, 0, 0}
             };
         }
     },

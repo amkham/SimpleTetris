@@ -3,8 +3,8 @@
  */
 public class GameService  {
 
-    private  Game game;
-    private  GameLogic gameLogic;
+    private final Game game;
+    private final GameLogic gameLogic;
 
     /**
      * Конструктор
